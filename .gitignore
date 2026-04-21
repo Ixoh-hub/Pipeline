@@ -1,9 +1,6 @@
-# Data files (large USPTO downloads)
-data/*.tsv
-data/*.zip
-data/*.gz
-data/patent_pipeline.db
-data/patent_pipeline.db-*
+# Data folder (large, 13GB+ - generated locally or downloaded on demand)
+data/
+!data/.gitkeep
 
 # Python cache
 __pycache__/
