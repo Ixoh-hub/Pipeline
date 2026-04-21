@@ -2,52 +2,40 @@
 """Streamlit dashboard for patent data exploration."""
 
 import streamlit as st
-import sqlite3
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from pathlib import Path
 import os
 import sys
+from database_utils import execute_query
 
-# Initialize database on startup
+# Database initialization - now handled automatically by database_utils
 @st.cache_resource
 def initialize_database():
-    """Ensure database is available, download if needed."""
-    db_path = Path("data/patent_pipeline.db")
-    
-    # Check if database exists locally
-    if db_path.exists():
-        return db_path
-    
-    # Try to download from cloud storage
-    if os.getenv("STREAMLIT_CLOUD"):
-        try:
-            from download_database import setup_database
-            if setup_database():
-                return db_path
-        except Exception as e:
-            st.warning(f"Could not download database: {e}")
-    
-    # Database not found
-    st.error("""
-    ❌ **Database Not Found**
-    
-    The patent database is not available. You have two options:
-    
-    1. **Run Locally**: 
-       - Clone the repository
-       - Run `python patent_pipeline.py` to generate the database
-       - Run `streamlit run app.py`
-    
-    2. **For Streamlit Cloud**:
-       - Upload data/patent_pipeline.db to cloud storage (Google Drive, AWS S3, etc.)
-       - Get a direct download URL
-       - Add to Streamlit Cloud secrets as: `DATABASE_URL = "your-url"`
-    
-    See DEPLOYMENT.md for detailed instructions.
-    """)
-    st.stop()
+    # Check if we can connect to database
+    try:
+        test_query = "SELECT COUNT(*) FROM patents LIMIT 1"
+        result = execute_query(test_query)
+        if result.empty:
+            raise Exception("No data found")
+        return True
+    except Exception as e:
+        st.error(f"""
+        ❌ **Database Connection Failed**
+        
+        {str(e)}
+        
+        **For Local Development:**
+        - Run `python patent_pipeline.py` to generate the database
+        
+        **For Streamlit Cloud:**
+        - Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in secrets
+        - Upload data to Supabase PostgreSQL database
+        
+        See SUPABASE_SETUP.md for detailed instructions.
+        """)
+        st.stop()
 
 # Initialize on first run
 DB_PATH = initialize_database()
@@ -95,14 +83,13 @@ st.markdown("""
 # Database connection with proper configuration
 @st.cache_resource
 def get_database_connection():
-    conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
-    return conn
+    # This function is now handled by database_utils
+    return None  # Not needed anymore
 
 @st.cache_data
 def load_data(query):
     try:
-        conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
-        return pd.read_sql_query(query, conn)
+        return execute_query(query)
     except Exception as e:
         st.error(f"Database error: {e}")
         return pd.DataFrame()

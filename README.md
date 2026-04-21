@@ -44,40 +44,52 @@ patent-pipeline/
 - Git
 - Internet connection for data download
 
-### 1. Clone the Repository
+### Option 1: Local SQLite Database (Development)
 
 ```bash
 git clone https://github.com/yourusername/patent-pipeline.git
 cd patent-pipeline
-```
-
-### 2. Install Dependencies
-
-```bash
 pip install -r requirements.txt
+python patent_pipeline.py  # Downloads and processes data (~2 hours)
+streamlit run app.py       # Launch dashboard
 ```
 
-### 3. Download USPTO Data
+### Option 2: Supabase Database (Production/Cloud)
 
-The project uses USPTO PatentsView bulk data. Download the following files and place them in the `data/` directory:
+For deployment and reproducibility:
 
-**Required Files:**
+1. **Clone and setup**:
+   ```bash
+   git clone https://github.com/yourusername/patent-pipeline.git
+   cd patent-pipeline
+   pip install -r requirements.txt
+   ```
 
-- `g_patent.tsv.zip` (Patent data)
-- `g_inventor_disambiguated.tsv.zip` (Inventor data)
-- `g_assignee_disambiguated.tsv.zip` (Assignee/Company data)
+2. **Setup Supabase** (see [SUPABASE_SETUP.md](SUPABASE_SETUP.md)):
+   - Create free Supabase project
+   - Upload patent data to PostgreSQL
+   - Get API keys
 
-**Optional for Enhanced Analysis:**
+3. **Configure environment**:
+   ```bash
+   # Create .env file
+   echo "SUPABASE_URL=https://your-project.supabase.co" > .env
+   echo "SUPABASE_SERVICE_ROLE_KEY=your-key" >> .env
+   ```
 
-- `g_cpc_current.tsv.zip` (Patent categories - CPC classifications)
+4. **Run locally**:
+   ```bash
+   streamlit run app.py
+   ```
 
-Download from: https://patentsview.org/download/
+5. **Deploy to Streamlit Cloud**:
+   - Push code to GitHub
+   - Deploy on Streamlit Cloud
+   - Set secrets: `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
 
-**Note:** These are large files (~10GB total). The pipeline will automatically extract and process them.
+### Legacy Setup (Manual Data Download)
 
-### 4. Run the Pipeline
-
-Execute the complete pipeline:
+If you prefer manual setup:
 
 ```bash
 python patent_pipeline.py
