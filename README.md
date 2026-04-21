@@ -8,9 +8,10 @@ A comprehensive, reproducible patent data analysis system that processes USPTO b
 - **Database**: SQLite relational database with optimized schema and indexes
 - **Analysis**: SQL queries for top inventors, companies, countries, and trends
 - **Reports**: Console, CSV, and JSON output formats
-- **Visualizations**: Interactive graphs and charts
-- **Dashboard**: Streamlit web application for data exploration
-- **Advanced Analysis**: Patent category analysis using CPC classifications
+- **Visualizations**: Static and interactive graphs and charts (matplotlib, seaborn, plotly)
+- **Dashboard**: Streamlit web application for interactive data exploration
+- **Advanced Analysis**: Patent category analysis and complexity trends
+- **Reproducible**: Complete setup with Git version control and dependency management
 
 ## Project Structure
 
@@ -27,7 +28,11 @@ patent-pipeline/
 │   ├── schema.sql           # Database schema
 │   └── queries.sql          # Sample SQL queries
 ├── data/                    # Data files (not in repo - see setup)
-├── reports/                 # Generated reports
+├── reports/                 # Generated reports and visualizations
+│   ├── *.png                # Static charts
+│   ├── *.html               # Interactive charts
+│   ├── *.csv                # Data exports
+│   └── *.json               # JSON reports
 └── notebooks/               # Jupyter notebooks for exploration
 ```
 
@@ -130,7 +135,11 @@ python analyze_categories.py
 - `reports/patent_trends.png` - Patent filing trends over time
 - `reports/top_inventors_chart.png` - Inventor patent distribution
 - `reports/company_analysis.png` - Company patent analysis
-- Interactive charts in the Streamlit dashboard
+- `reports/country_distribution.png` - Patent distribution by country
+- `reports/patent_counts_by_year.png` - Patent counts by year (2010-2023)
+- `reports/top_countries_basic.png` - Top countries by inventor count
+- Interactive HTML charts: `interactive_trends.html`, `interactive_inventors.html`, `interactive_companies.html`
+- Streamlit dashboard at `http://localhost:8501` for interactive exploration
 
 ## Key Findings
 

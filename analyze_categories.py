@@ -97,59 +97,56 @@ def basic_category_analysis(conn):
     """Basic analysis when CPC data is not available."""
     print(f"[{datetime.now()}] Performing basic patent analysis...")
 
-    # Analyze patents by year and basic metrics
-    year_stats = pd.read_sql_query("""
-        SELECT
-            year,
-            COUNT(*) as total_patents,
-            COUNT(DISTINCT title) as unique_titles,
-            AVG(LENGTH(title)) as avg_title_length,
-            AVG(LENGTH(abstract)) as avg_abstract_length
+    # Simple patent count by year (recent years only)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT year, COUNT(*) as count
         FROM patents
-        WHERE year IS NOT NULL AND year > 1900
+        WHERE year >= 2010 AND year <= 2023
         GROUP BY year
         ORDER BY year
-    """, conn)
+    """)
+    year_data = cursor.fetchall()
 
-    # Plot patent complexity over time
-    plt.figure(figsize=(12, 6))
-    plt.plot(year_stats['year'], year_stats['avg_title_length'], label='Avg Title Length', marker='o')
-    plt.plot(year_stats['year'], year_stats['avg_abstract_length'], label='Avg Abstract Length', marker='s')
-    plt.title('Patent Complexity Over Time', fontsize=16, fontweight='bold')
-    plt.xlabel('Year')
-    plt.ylabel('Average Length (characters)')
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(REPORTS_DIR / 'patent_complexity_trends.png', dpi=300, bbox_inches='tight')
-    plt.close()
+    if year_data:
+        years = [row[0] for row in year_data]
+        counts = [row[1] for row in year_data]
 
-    # Inventor collaboration analysis
-    collaboration_stats = pd.read_sql_query("""
-        SELECT
-            patent_count,
-            COUNT(*) as frequency
-        FROM (
-            SELECT patent_id, COUNT(*) as patent_count
-            FROM relationships
-            GROUP BY patent_id
-        )
-        GROUP BY patent_count
-        ORDER BY patent_count
+        plt.figure(figsize=(10, 6))
+        plt.bar(years, counts)
+        plt.title('Patent Counts by Year (2010-2023)', fontsize=16, fontweight='bold')
+        plt.xlabel('Year')
+        plt.ylabel('Number of Patents')
+        plt.xticks(years, rotation=45)
+        plt.tight_layout()
+        plt.savefig(REPORTS_DIR / 'patent_counts_by_year.png', dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # Top countries by patent count
+    cursor.execute("""
+        SELECT country, COUNT(*) as count
+        FROM inventors
+        WHERE country IS NOT NULL AND country != ''
+        GROUP BY country
+        ORDER BY count DESC
         LIMIT 10
-    """, conn)
+    """)
+    country_data = cursor.fetchall()
 
-    plt.figure(figsize=(10, 6))
-    plt.bar(collaboration_stats['patent_count'], collaboration_stats['frequency'])
-    plt.title('Patent Collaboration Patterns', fontsize=16, fontweight='bold')
-    plt.xlabel('Number of Inventors per Patent')
-    plt.ylabel('Number of Patents')
-    plt.xticks(collaboration_stats['patent_count'])
-    plt.tight_layout()
-    plt.savefig(REPORTS_DIR / 'collaboration_patterns.png', dpi=300, bbox_inches='tight')
-    plt.close()
+    if country_data:
+        countries = [row[0] for row in country_data]
+        counts = [row[1] for row in country_data]
 
-    print(f"[{datetime.now()}] Basic analysis visualizations saved.")
+        plt.figure(figsize=(12, 6))
+        plt.barh(countries[::-1], counts[::-1])
+        plt.title('Top 10 Countries by Patent Count', fontsize=16, fontweight='bold')
+        plt.xlabel('Number of Patents')
+        plt.tight_layout()
+        plt.savefig(REPORTS_DIR / 'top_countries_basic.png', dpi=300, bbox_inches='tight')
+        plt.close()
+
+    cursor.close()
+    print(f"[{datetime.now()}] Basic analysis complete!")
 
 def advanced_category_analysis(conn):
     """Advanced analysis with CPC classification data."""
