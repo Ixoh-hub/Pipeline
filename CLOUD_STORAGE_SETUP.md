@@ -145,6 +145,7 @@ Since the database is too large (120MB) to commit to GitHub, use cloud storage a
 ### For Large Files (>100MB)
 
 If using GitHub Releases:
+
 ```bash
 # Install Git LFS first
 git lfs install
@@ -161,6 +162,7 @@ git push
 ### For AWS S3
 
 Consider using signed URLs for security:
+
 ```python
 import boto3
 from botocore.exceptions import ClientError
@@ -206,11 +208,13 @@ python patent_pipeline.py
 ### Database Not Downloading
 
 **Check:**
+
 - Is `DATABASE_URL` set in Streamlit Cloud Secrets?
 - Is the URL still valid and accessible?
 - Is the file the correct format?
 
 **Fix:**
+
 ```bash
 # Test URL locally
 python -c "import requests; requests.get('YOUR_URL', timeout=10)"
@@ -219,6 +223,7 @@ python -c "import requests; requests.get('YOUR_URL', timeout=10)"
 ### Download Too Slow
 
 **Solutions:**
+
 - Use regional storage closer to Streamlit servers (US-East recommended)
 - Compress database before upload
 - Consider upgrade to paid Streamlit tier
@@ -226,6 +231,7 @@ python -c "import requests; requests.get('YOUR_URL', timeout=10)"
 ### Out of Storage
 
 Streamlit Cloud temporary storage is ~1GB. Solutions:
+
 - Delete old databases
 - Use streaming to load only needed data
 - Split database into smaller parts
