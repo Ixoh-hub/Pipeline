@@ -122,7 +122,7 @@ def basic_category_analysis(conn):
         plt.savefig(REPORTS_DIR / 'patent_counts_by_year.png', dpi=300, bbox_inches='tight')
         plt.close()
 
-    # Top countries by patent count
+    # Top countries by inventor count
     cursor.execute("""
         SELECT country, COUNT(*) as count
         FROM inventors
@@ -139,10 +139,10 @@ def basic_category_analysis(conn):
 
         plt.figure(figsize=(12, 6))
         plt.barh(countries[::-1], counts[::-1])
-        plt.title('Top 10 Countries by Patent Count', fontsize=16, fontweight='bold')
-        plt.xlabel('Number of Patents')
+        plt.title('Top 10 Countries by Inventor Count', fontsize=16, fontweight='bold')
+        plt.xlabel('Number of Inventors')
         plt.tight_layout()
-        plt.savefig(REPORTS_DIR / 'top_countries_basic.png', dpi=300, bbox_inches='tight')
+        plt.savefig(REPORTS_DIR / 'top_countries_inventors.png', dpi=300, bbox_inches='tight')
         plt.close()
 
     cursor.close()
