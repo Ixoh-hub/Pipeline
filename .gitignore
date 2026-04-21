@@ -1,0 +1,48 @@
+# Data files (large USPTO downloads)
+data/*.tsv
+data/*.zip
+data/*.gz
+data/patent_pipeline.db
+data/patent_pipeline.db-*
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+pipeline_run.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/
+
+# Keep these (small files)
+!data/clean_*.csv
+!reports/
+!sql/
+!scripts/
