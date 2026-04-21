@@ -62,11 +62,13 @@ pip install -r requirements.txt
 The project uses USPTO PatentsView bulk data. Download the following files and place them in the `data/` directory:
 
 **Required Files:**
+
 - `g_patent.tsv.zip` (Patent data)
 - `g_inventor_disambiguated.tsv.zip` (Inventor data)
 - `g_assignee_disambiguated.tsv.zip` (Assignee/Company data)
 
 **Optional for Enhanced Analysis:**
+
 - `g_cpc_current.tsv.zip` (Patent categories - CPC classifications)
 
 Download from: https://patentsview.org/download/
@@ -82,6 +84,7 @@ python patent_pipeline.py
 ```
 
 This will:
+
 - Extract and clean the USPTO data
 - Create the SQLite database
 - Run analysis queries
@@ -122,9 +125,11 @@ python analyze_categories.py
 ## Outputs
 
 ### Database
+
 - `data/patent_pipeline.db` - SQLite database (3.9GB)
 
 ### Reports
+
 - `reports/top_inventors.csv` - Top 10 inventors by patent count
 - `reports/top_companies.csv` - Top 10 companies by patent count
 - `reports/top_countries.csv` - Patent distribution by country
@@ -132,6 +137,7 @@ python analyze_categories.py
 - `reports/patent_report.json` - Complete structured report
 
 ### Visualizations
+
 - `reports/patent_trends.png` - Patent filing trends over time
 - `reports/top_inventors_chart.png` - Inventor patent distribution
 - `reports/company_analysis.png` - Company patent analysis

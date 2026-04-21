@@ -66,6 +66,7 @@ git push -u origin main
 #### Option A: Exclude Database (Recommended)
 
 1. Add to `.gitignore`:
+
    ```
    data/patent_pipeline.db
    *.db
@@ -101,7 +102,7 @@ from pathlib import Path
 @st.cache_resource
 def get_database_connection():
     db_path = Path("data/patent_pipeline.db")
-    
+
     # Download if not exists
     if not db_path.exists():
         db_path.parent.mkdir(exist_ok=True)
@@ -109,7 +110,7 @@ def get_database_connection():
             url = "https://your-cloud-storage/patent_pipeline.db"
             response = requests.get(url)
             db_path.write_bytes(response.content)
-    
+
     conn = sqlite3.connect(str(db_path), check_same_thread=False)
     return conn
 ```
@@ -133,6 +134,7 @@ def get_database_connection():
 ### Step 6: Access Your App
 
 Once deployed, your app will have a URL like:
+
 ```
 https://your-username-patent-intelligence-dashboard.streamlit.app
 ```
@@ -202,15 +204,18 @@ git push origin main
 ## 🐛 Troubleshooting
 
 ### "Module not found" Error
+
 - Ensure all dependencies are in `requirements.txt`
 - Redeploy the app after updating requirements
 
 ### Database Connection Error
+
 - Check database file location
 - Verify database path in app.py matches your structure
 - Use absolute paths if needed
 
 ### Slow Performance
+
 - Reduce data loaded per query
 - Use pagination for large result sets
 - Increase cache TTL:
@@ -222,6 +227,7 @@ def load_data(query):
 ```
 
 ### Memory Issues
+
 - Reduce number of metrics shown
 - Paginate large tables
 - Consider upgrading to paid Streamlit tier
@@ -231,20 +237,24 @@ def load_data(query):
 ## 📱 Sharing Your Dashboard
 
 ### Direct Link
+
 ```
 https://your-username-patent-intelligence-dashboard.streamlit.app
 ```
 
 ### Embed in Website
+
 ```html
-<iframe 
-    src="https://your-username-patent-intelligence-dashboard.streamlit.app?embed=true" 
-    height="800" 
-    width="100%">
+<iframe
+  src="https://your-username-patent-intelligence-dashboard.streamlit.app?embed=true"
+  height="800"
+  width="100%"
+>
 </iframe>
 ```
 
 ### Share Findings
+
 Use the **Share** button in Streamlit Cloud to create snapshot links of specific views
 
 ---

@@ -11,6 +11,7 @@
 ### Step 1: Prepare Your Repository
 
 1. Initialize Git (if not already done):
+
    ```bash
    git init
    git add .
@@ -34,11 +35,13 @@
 Since the database file is large (100MB+), we have two options:
 
 **Option A: Download database on first run (Recommended)**
+
 - The app will check if the database exists
 - If not, it will display a message with download instructions
 - Users can download from your chosen host
 
 **Option B: Store in Cloud Storage**
+
 - Upload database to cloud storage (Google Drive, AWS S3, etc.)
 - Modify app.py to download it on startup
 
@@ -59,12 +62,14 @@ Since the database file is large (100MB+), we have two options:
 ### Step 5: Configure Secrets (if needed)
 
 If your app requires sensitive data:
+
 1. Go to App Settings → Secrets
 2. Add any API keys or credentials in TOML format
 
 ### Step 6: Share Your App
 
 Once deployed, your app will have a URL like:
+
 ```
 https://your-username-patent-pipeline.streamlit.app
 ```
@@ -95,15 +100,18 @@ Share this link with anyone to access your dashboard!
 ## Troubleshooting
 
 ### Database Not Found Error
+
 - Ensure `data/patent_pipeline.db` is available
 - Check `.gitignore` isn't preventing database from being committed
 
 ### Slow Performance
+
 - Check database query efficiency
 - Increase caching TTL in app.py
 - Optimize SQL queries
 
 ### Memory Issues
+
 - Reduce the amount of data loaded into memory
 - Use pagination for large datasets
 - Consider using a lighter caching strategy
