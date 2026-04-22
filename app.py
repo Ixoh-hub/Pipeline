@@ -29,11 +29,17 @@ def initialize_database():
         **For Local Development:**
         - Run `python patent_pipeline.py` to generate the database
         
-        **For Streamlit Cloud:**
-        - Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in secrets
-        - Upload data to Supabase PostgreSQL database
+        **For Streamlit Cloud (Recommended):**
+        - Upload `data/patent_pipeline.db` to Google Drive, AWS S3, or similar
+        - Get a shareable download URL
+        - Set `DATABASE_URL` in Streamlit Cloud secrets
+        - The app will automatically download the database on startup
         
-        See SUPABASE_SETUP.md for detailed instructions.
+        **Alternative: Supabase PostgreSQL**
+        - Set `SUPABASE_URL` and `SUPABASE_DB_PASSWORD` in secrets
+        - Upload data to Supabase database (see SUPABASE_SETUP.md)
+        
+        See FINAL_DEPLOYMENT_GUIDE.md for complete instructions.
         """)
         st.stop()
 
