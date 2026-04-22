@@ -1,98 +1,64 @@
-# Patent Intelligence Data Pipeline
+# Patent Intelligence Dashboard
 
-A comprehensive, reproducible patent data analysis system that processes USPTO bulk patent data, builds a relational database, and generates insights on inventors, companies, and patent trends.
+A streamlined Streamlit web application for exploring USPTO patent data insights and trends.
 
 ## Features
 
-- **Data Processing**: Downloads and processes USPTO bulk patent data (9.4M+ patents)
-- **Database**: SQLite relational database with optimized schema and indexes
-- **Analysis**: SQL queries for top inventors, companies, countries, and trends
-- **Reports**: Console, CSV, and JSON output formats
-- **Visualizations**: Static and interactive graphs and charts (matplotlib, seaborn, plotly)
-- **Dashboard**: Streamlit web application for interactive data exploration
-- **Advanced Analysis**: Patent category analysis and complexity trends
-- **Reproducible**: Complete setup with Git version control and dependency management
+- **📊 Interactive Dashboard**: Clean, modern interface with key patent visualizations
+- **📈 Patent Trends**: Historical patent filing trends from 1976-2023
+- **🏆 Top Contributors**: Leading inventors and companies by patent count
+- **🌍 Global Distribution**: Patent distribution across countries
+- **⚡ Lightweight**: No database dependencies, runs efficiently on Streamlit Cloud
+- **📱 Responsive**: Optimized for web deployment
+
+## Quick Start
+
+### Online Demo
+Visit the live dashboard at: [Streamlit Cloud URL]
+
+### Local Development
+
+```bash
+git clone https://github.com/yourusername/patent-intelligence-dashboard.git
+cd patent-intelligence-dashboard
+pip install -r requirements.txt
+streamlit run app.py
+```
 
 ## Project Structure
 
 ```
-patent-pipeline/
-├── README.md                 # This file
-├── requirements.txt          # Python dependencies
-├── patent_pipeline.py        # Main data processing pipeline
-├── run_analysis.py           # Analysis and reporting script
-├── create_visualizations.py  # Data visualization script
-├── app.py                    # Streamlit dashboard
-├── analyze_categories.py     # Advanced patent category analysis
-├── sql/
-│   ├── schema.sql           # Database schema
-│   └── queries.sql          # Sample SQL queries
-├── data/                    # Data files (not in repo - see setup)
-├── reports/                 # Generated reports and visualizations
-│   ├── *.png                # Static charts
-│   ├── *.html               # Interactive charts
-│   ├── *.csv                # Data exports
-│   └── *.json               # JSON reports
-└── notebooks/               # Jupyter notebooks for exploration
+patent-intelligence-dashboard/
+├── README.md              # This file
+├── requirements.txt       # Python dependencies
+├── app.py                 # Streamlit dashboard
+├── sql/                   # Database schema (reference)
+├── reports/               # Generated visualizations (optional)
+└── notebooks/             # Jupyter analysis notebooks (optional)
 ```
 
-## Setup and Installation
+## Key Insights Displayed
 
-### Prerequisites
+- **9.4M+ Patents** analyzed from USPTO database
+- **Patent growth trends** showing exponential increase since 2000
+- **Top 10 inventors** led by Shunpei Yamazaki (2,364 patents)
+- **Top 10 companies** led by IBM (158K+ patents)
+- **Global distribution** with 85% US dominance
 
-- Python 3.12+
-- Git
-- Internet connection for data download
+## Technology Stack
 
-### Option 1: Local SQLite Database (Development)
+- **Streamlit**: Web application framework
+- **Plotly**: Interactive visualizations
+- **Pandas**: Data manipulation
+- **NumPy**: Numerical computations
 
-```bash
-git clone https://github.com/yourusername/patent-pipeline.git
-cd patent-pipeline
-pip install -r requirements.txt
-python patent_pipeline.py  # Downloads and processes data (~2 hours)
-streamlit run app.py       # Launch dashboard
-```
+## Deployment
 
-### Option 2: Supabase Database (Production/Cloud)
-
-For deployment and reproducibility:
-
-1. **Clone and setup**:
-   ```bash
-   git clone https://github.com/yourusername/patent-pipeline.git
-   cd patent-pipeline
-   pip install -r requirements.txt
-   ```
-
-2. **Setup Supabase** (see [SUPABASE_SETUP.md](SUPABASE_SETUP.md)):
-   - Create free Supabase project
-   - Upload patent data to PostgreSQL
-   - Get API keys
-
-3. **Configure environment**:
-   ```bash
-   # Create .env file
-   echo "SUPABASE_URL=https://your-project.supabase.co" > .env
-   echo "SUPABASE_SERVICE_ROLE_KEY=your-key" >> .env
-   ```
-
-4. **Run locally**:
-   ```bash
-   streamlit run app.py
-   ```
-
-5. **Deploy to Streamlit Cloud**:
-   - Push code to GitHub
-   - Deploy on Streamlit Cloud
-   - Set secrets: `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
-
-### Legacy Setup (Manual Data Download)
-
-If you prefer manual setup:
-
-```bash
-python patent_pipeline.py
+The app is optimized for Streamlit Cloud deployment with:
+- ✅ Under 100MB resource usage
+- ✅ No external database dependencies
+- ✅ Pre-computed data for fast loading
+- ✅ Responsive design for all devices
 ```
 
 This will:
