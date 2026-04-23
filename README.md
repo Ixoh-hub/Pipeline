@@ -14,6 +14,7 @@ A streamlined Streamlit web application for exploring USPTO patent data insights
 ## Quick Start
 
 ### Online Demo
+
 Visit the live dashboard at: [Streamlit Cloud URL]
 
 ### Local Development
@@ -55,11 +56,13 @@ patent-intelligence-dashboard/
 ## Deployment
 
 The app is optimized for Streamlit Cloud deployment with:
+
 - ✅ Under 100MB resource usage
 - ✅ No external database dependencies
 - ✅ Pre-computed data for fast loading
 - ✅ Responsive design for all devices
-```
+
+````
 
 This will:
 
@@ -74,7 +77,7 @@ If the database already exists, run analysis only:
 
 ```bash
 python run_analysis.py
-```
+````
 
 ### 6. Create Visualizations
 
