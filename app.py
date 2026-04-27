@@ -8,6 +8,10 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
+# Get the directory where this script is located
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(SCRIPT_DIR, 'data')
+
 # Page configuration
 st.set_page_config(
     page_title="Patent Intelligence Dashboard",
@@ -143,24 +147,24 @@ st.markdown("""
 
 @st.cache_data
 def load_patent_data():
-    path = os.path.join('data', 'clean_patents.csv')
+    path = os.path.join(DATA_DIR, 'clean_patents.csv')
     df = pd.read_csv(path, parse_dates=['filing_date'], usecols=['patent_id', 'title', 'abstract', 'filing_date', 'year'])
     df['year'] = df['year'].astype(int)
     return df
 
 @st.cache_data
 def load_company_data():
-    path = os.path.join('data', 'clean_companies.csv')
+    path = os.path.join(DATA_DIR, 'clean_companies.csv')
     return pd.read_csv(path, usecols=['company_id', 'name'])
 
 @st.cache_data
 def load_inventor_data():
-    path = os.path.join('data', 'clean_inventors.csv')
+    path = os.path.join(DATA_DIR, 'clean_inventors.csv')
     return pd.read_csv(path, usecols=['inventor_id', 'name', 'country'])
 
 @st.cache_data
 def load_relationship_data():
-    pattern = os.path.join('data', 'clean_relationships_part_*.csv')
+    pattern = os.path.join(DATA_DIR, 'clean_relationships_part_*.csv')
     paths = sorted(glob.glob(pattern))
     frames = []
     for path in paths:
